@@ -3,7 +3,7 @@ Jo=$1
 str=$2
 IFS=' '
 read -ra ADDR <<< "$str" 
-chemin_binaire="/var/Eurecom"
+chemin_binaire=""
 if test $Jo -eq 0; then
         echo "nope"
 else
