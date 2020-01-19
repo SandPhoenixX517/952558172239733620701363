@@ -1,11 +1,9 @@
-<?php
 #!/bin/bash
 Jo=$1
 str=$2
 IFS=' '
-read -ra ADDR <<< "$str"
-
-binary="/var/Eurecom/binary" #tsaraf nayek badel esm eli yaatihelek houa 
+read -ra ADDR <<< "$str" 
+chemin_binaire="/var/Eurecom"
 if test $Jo -eq 0; then
         echo "nope"
 else
@@ -60,7 +58,21 @@ else
 			fi
 
 		done
-		dhia="${dhia} ${binary} &"
+		shit=${ADDR[$firas]}
+		IFS="/"
+		read -ra ADDR <<< "$shit"
+		please2="0"
+		zab=0
+		while (( "$please2" == "0" ))
+		do
+			if test "${ADDR[$zab]}" == ""; then
+				please2=1
+			fi
+		done
+		zab=$(($zab-1))
+		ActualBinaryName=${ADDR[$zab]}
+		chemin_binaire="${chemin_binaire}/${ActualBinaryName}"
+		dhia="${dhia} ${chemin_binaire} &"
 		ctr=$(($ctr+1))
 		$dhia
 	done 
