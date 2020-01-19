@@ -1,0 +1,68 @@
+<?php
+#!/bin/bash
+Jo=$1
+str=$2
+IFS=' '
+read -ra ADDR <<< "$str"
+
+binary="/var/Eurecom/binary" #tsaraf nayek badel esm eli yaatihelek houa 
+if test $Jo -eq 0; then
+        echo "nope"
+else
+        variable=$(ls /var/Eurecom/shared/inputaflgo | wc -l)
+        variable=$(($variable/$Jo))
+        counter=0
+        mkdir "/var/Eurecom/inputaflgoV1"
+        mkdir "/var/Eurecom/outputaflgoV1"
+        while (( counter < Jo ))
+        do
+                path="/var/Eurecom/inputaflgoV1/$counter"
+                mkdir "$path"
+                path2="/var/Eurecom/outputaflgoV1/$counter"
+                mkdir "$path2"
+                cd /var/Eurecom/shared/inputaflgo
+                To_move=$(ls | tail -n $variable)
+                mv $To_move $path
+                counter=$(($counter+1))
+        done
+	ctr=0
+	while(( ctr < Jo ))
+	do
+		njeh="/var/Eurecom/inputaflgoV1/${!counter}"
+		tarhouni="/var/Eurecom/outputaflgoV1/${!counter}"
+		zab=0
+		dhia="${ADDR[$zab]}"
+		zab=3
+		please="0"
+		while (( "$please" == "0" ))
+		do
+			firas=$(($zab-1))
+			if [ "${ADDR[$firas]}" == "-i" ]
+                        then
+
+                        	dhia="${dhia} ${ADDR[$firas]}"
+                                dhia="${dhia} ${njeh}"
+                                firas=$(($firas+2))
+				zab=$(($firas+1))
+                        elif [ "${ADDR[$firas]}" == "-o" ]
+                        then
+                                dhia="${dhia} ${ADDR[$firas]}"
+                                dhia="${dhia} ${tarhouni}"
+                                firas=$(($firas+2))
+				zab=$(($firas+1))
+                        else
+                                dhia="${dhia} ${ADDR[$firas]}"
+                                firas=$(($firas+1))
+				zab=$(($firas+1))
+                        fi
+			if test "${ADDR[$zab]}" == ""; then
+				please=1
+			fi
+
+		done
+		dhia="${dhia} ${binary} &"
+		ctr=$(($ctr+1))
+		$dhia
+	done 
+
+fi
