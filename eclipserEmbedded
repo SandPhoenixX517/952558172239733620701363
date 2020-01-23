@@ -1,3 +1,4 @@
+
 #!/bin/bash
 str=$1
 IFS=' '
@@ -36,4 +37,6 @@ do
                 please=1
         fi
 done
-echo "$dhia"
+text="dotnet Eclipser/build/Eclipser.dll fuzz"
+dhia="${text} ${dhia}"
+$final
