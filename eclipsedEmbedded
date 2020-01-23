@@ -1,0 +1,39 @@
+#!/bin/bash
+str=$1
+IFS=' '
+read -ra ADDR <<< "$str" 
+njeh="/var/Eurecom"
+zab=0
+dhia=""
+zab=1
+please="0"
+while (( "$please" == "0" ))
+do
+        if [ "${ADDR[$zab]}" == "-p" ]
+        then
+                dhia="${dhia}${ADDR[$zab]}"
+                zakataka=$(($zab+1))
+                shit=${ADDR[$zakataka]}
+                IFS="/"
+                read -ra ADDRI <<< "$shit"
+                please2="0"
+                zakch=0
+                while (( "$please2" == "0" ))
+                do
+                        if test "${ADDRI[$zakch]}" == ""; then
+                                please2=1
+                        fi
+                done
+                zakch=$(($zakch-1))
+                ActualBinaryName=${ADDRI[$zakch]}
+                njeh="${njeh}/${ActualBinaryName}"
+                dhia="${dhia} ${njeh}"
+                zab=$(($zab+2))
+        fi
+        dhia="${dhia} ${ADDR[$zab]}"
+        zab=$(($zab+1))
+        if test "${ADDR[$zab]}" == ""; then
+                please=1
+        fi
+done
+echo "$dhia"
