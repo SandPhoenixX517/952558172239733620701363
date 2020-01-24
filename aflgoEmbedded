@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 Jo=$1
 str=$2
 read -ra ADDR <<< "$str" 
