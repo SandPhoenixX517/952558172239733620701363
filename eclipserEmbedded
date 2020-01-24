@@ -37,4 +37,4 @@ do
         fi
 done
 
-$dhia
+eval "$dhia"
