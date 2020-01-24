@@ -12,7 +12,7 @@ while (( "$please" == "0" ))
 do
         if [ "${ADDR[$zab]}" == "-p" ]
         then
-                dhia="${dhia}${ADDR[$zab]}"
+                dhia="${dhia} ${ADDR[$zab]}"
                 zakataka=$(($zab+1))
                 shit=${ADDR[$zakataka]}
                 IFS="/"
