@@ -1,13 +1,12 @@
-#!/bin/bash
+!/bin/bash
 Jo=$1
 str=$2
-IFS=' '
 read -ra ADDR <<< "$str" 
 chemin_binaire=""
 if test $Jo -eq 0; then
         echo "nope"
 else
-        variable=$(ls /var/Eurecom/shared/inputaflgo | wc -l)
+        variable=$(ls /var/Eurecom/inputaflgo | wc -l)
         variable=$(($variable/$Jo))
         counter=0
         mkdir "/var/Eurecom/inputaflgoV1"
@@ -18,63 +17,67 @@ else
                 mkdir "$path"
                 path2="/var/Eurecom/outputaflgoV1/$counter"
                 mkdir "$path2"
-                cd /var/Eurecom/shared/inputaflgo
-                To_move=$(ls | tail -n $variable)
-                mv $To_move $path
+                ls /var/Eurecom/inputaflgo | tail -n $variable > file
+                var1="$(pwd)/file"
+                while IFS= read -r line 
+                do 
+                        mv "/var/Eurecom/inputaflgo/$line" "$path/"
+                done < "$var1"
                 counter=$(($counter+1))
         done
-	ctr=0
-	while(( ctr < Jo ))
-	do
-		njeh="/var/Eurecom/inputaflgoV1/${!counter}"
-		tarhouni="/var/Eurecom/outputaflgoV1/${!counter}"
-		zab=0
-		dhia="${ADDR[$zab]}"
-		zab=3
-		please="0"
-		while (( "$please" == "0" ))
-		do
-			firas=$(($zab-1))
-			if [ "${ADDR[$firas]}" == "-i" ]
+        ctr=0
+        IFS=' '
+        while(( ctr < Jo ))
+        do
+                njeh="/var/Eurecom/inputaflgoV1/${!counter}"
+                tarhouni="/var/Eurecom/outputaflgoV1/${!counter}"
+                zab=0
+                dhia="${ADDR[$zab]}"
+                zab=3
+                please="0"
+                while (( "$please" == "0" ))
+                do
+                        firas=$(($zab-1))
+                        if [ "${ADDR[$firas]}" == "-i" ]
                         then
 
-                        	dhia="${dhia} ${ADDR[$firas]}"
+                                dhia="${dhia} ${ADDR[$firas]}"
                                 dhia="${dhia} ${njeh}"
                                 firas=$(($firas+2))
-				zab=$(($firas+1))
+                                zab=$(($firas+1))
                         elif [ "${ADDR[$firas]}" == "-o" ]
                         then
                                 dhia="${dhia} ${ADDR[$firas]}"
                                 dhia="${dhia} ${tarhouni}"
                                 firas=$(($firas+2))
-				zab=$(($firas+1))
+                                zab=$(($firas+1))
                         else
                                 dhia="${dhia} ${ADDR[$firas]}"
                                 firas=$(($firas+1))
-				zab=$(($firas+1))
+                                zab=$(($firas+1))
                         fi
-			if test "${ADDR[$zab]}" == ""; then
-				please=1
-			fi
+                        if test "${ADDR[$zab]}" == ""; then
+                                please=1
+                        fi
 
-		done
-		shit=${ADDR[$firas]}
-		IFS="/"
-		read -ra ADDR <<< "$shit"
-		please2="0"
-		zab=0
-		while (( "$please2" == "0" ))
-		do
-			if test "${ADDR[$zab]}" == ""; then
-				please2=1
-			fi
-		done
-		zab=$(($zab-1))
-		ActualBinaryName=${ADDR[$zab]}
-		chemin_binaire="${chemin_binaire}/${ActualBinaryName}"
-		dhia="${dhia} ${chemin_binaire} &"
-		ctr=$(($ctr+1))
-		eval "$dhia"
-	done 
+                done
+                shit=${ADDR[$firas]}
+                IFS="/"
+                read -ra ADDR <<< "$shit"
+                please2="0"
+                zab=0
+                while (( "$please2" == "0" ))
+                do
+                        if test "${ADDR[$zab]}" == ""; then
+                                please2=1
+                        fi
+                done
+                zab=$(($zab-1))
+                ActualBinaryName=${ADDR[$zab]}
+                chemin_binaire="${chemin_binaire}/${ActualBinaryName}"
+                dhia="${dhia} ${chemin_binaire} &"
+                ctr=$(($ctr+1))
+                eval "$dhia"
+        done 
 
 fi
