@@ -74,7 +74,7 @@ else
 		chemin_binaire="${chemin_binaire}/${ActualBinaryName}"
 		dhia="${dhia} ${chemin_binaire} &"
 		ctr=$(($ctr+1))
-		$dhia
+		eval "$dhia"
 	done 
 
 fi
