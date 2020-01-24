@@ -25,12 +25,13 @@ else
                 done < "$var1"
                 counter=$(($counter+1))
         done
+        echo "reached here"
         ctr=0
         IFS=' '
         while(( ctr < Jo ))
         do
-                njeh="/var/Eurecom/inputaflgoV1/${!counter}"
-                tarhouni="/var/Eurecom/outputaflgoV1/${!counter}"
+                njeh="/var/Eurecom/inputaflgoV1/$ctr"
+                tarhouni="/var/Eurecom/outputaflgoV1/$ctr"
                 zab=0
                 dhia="${ADDR[$zab]}"
                 zab=3
@@ -61,23 +62,12 @@ else
                         fi
 
                 done
-                shit=${ADDR[$firas]}
-                IFS="/"
-                read -ra ADDR <<< "$shit"
-                please2="0"
-                zab=0
-                while (( "$please2" == "0" ))
-                do
-                        if test "${ADDR[$zab]}" == ""; then
-                                please2=1
-                        fi
-                done
-                zab=$(($zab-1))
-                ActualBinaryName=${ADDR[$zab]}
-                chemin_binaire="${chemin_binaire}/${ActualBinaryName}"
-                dhia="${dhia} ${chemin_binaire} &"
-                ctr=$(($ctr+1))
-                eval "$dhia"
+                echo "hama"
+
+        ctr=$(($ctr+1))
+        ola=${ADDR[$firas]}
+        dhia="${dhia} ${ola} &"
+        eval "$dhia"
         done 
 
 fi
