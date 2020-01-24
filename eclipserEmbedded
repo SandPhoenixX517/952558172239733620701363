@@ -1,5 +1,6 @@
 #!/bin/bash
 str=$1
+str="-Ec $str"
 IFS=' '
 read -ra ADDR <<< "$str" 
 njeh="/var/Eurecom"
@@ -36,5 +37,4 @@ do
                 please=1
         fi
 done
-
 eval "$dhia"
